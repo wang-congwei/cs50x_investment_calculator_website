@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Investment Calculator
+{% endblock %}
+
+{% block main %}
+    <h3>Investment Calculator</h3>
+    <form action="/" method="post">
+        <div class="mb-3">
+            <label for="capital" class="form-label">Starting Capital</label>
+            <input type="number" class="form-control" id="capital" name="capital" min="0" step="any" placeholder="Enter starting capital" required>
+        </div>
+        <div class="mb-3">
+            <label for="month_invest" class="form-label">Monthly Investment</label>
+            <input type="number" class="form-control" id="month_invest" name="month_invest" min="0" step="any" placeholder="Enter monthly investment" required>
+        </div>
+        <div class="mb-3">
+            <label for="invest_year" class="form-label">Years to Invest</label>
+            <input type="number" class="form-control" id="invest_year" name="invest_year" min="1" step="1" placeholder="Enter number of years" required>
+        </div>
+        <div class="mb-3">
+            <label for="invest_rate" class="form-label">Expected Yearly Return (%)</label>
+            <input type="number" class="form-control" id="invest_rate" name="invest_rate" min="0" step="any" placeholder="Enter expected yearly return rate" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Calculate</button>
+    </form>
+{% endblock %}

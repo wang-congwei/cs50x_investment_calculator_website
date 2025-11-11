@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Investment Result
+{% endblock %}
+
+{% block main %}
+    <h3>Investment Result</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Year</th>
+                <th>Cumulative Capital</th>
+                <th>Cumulative Return</th>
+                <th>Total Assets</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in range(years | length) %}
+                <tr>
+                    <td>{{ years[i] }}</td>
+                    <td>{{ capitals[i] }}</td>
+                    <td>{{ returns[i] }}</td>
+                    <td>{{ totals[i] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h4 class="mt-4">Total Assets Over Time</h4>
+    <canvas id="assetsChart" height="90"></canvas>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const years = {{ years | tojson }};
+        const capitals = {{ capitals | tojson }};
+        const returns = {{ returns | tojson }};
+
+        const ctx = document.getElementById('assetsChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: years,
+                datasets: [
+                    {
+                        label: 'Cumulative Capital',
+                        data: capitals,
+                        backgroundColor: 'rgba(54, 162, 235, 0.7)'
+                    },
+                    {
+                        label: 'Cumulative Return',
+                        data: returns,
+                        backgroundColor: 'rgba(255, 193, 7, 0.8)'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top' }
+                },
+                scales: {
+                    x: {
+                        stacked: true,
+                        title: {
+                            display: true,
+                            text: "Year"
+                        }
+                    },
+                    y: {
+                        stacked: true,
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: "Amount"
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+{% endblock %}
